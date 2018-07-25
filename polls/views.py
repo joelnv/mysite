@@ -29,10 +29,10 @@
 # def vote(request, question_id):
 #     return HttpResponse("You're voting on question %s." % question_id)
 
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
 # from django.http import HttpResponse
 # from django.template import loader
-from django.http import Http404
+# from django.http import Http404
 from .models import Question
 
 
@@ -50,8 +50,5 @@ def index(request):
 
 
 def detail(request, question_id):
-    try:
-        question = Question.objects.get(pk=question_id)
-    except Question.DoesNotexist:
-        raise Http404("Question does not exist")
-    return render(request, "polls/details.html", {'question': question})
+        question = get_object_or_404(Question, pk=question_id)
+        return render(request, "polls/details.html", {'question': question})
